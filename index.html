@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="We propose a new deep SfM pipeline, where each component is fully differentiable and thus can be trained in an end-to-end manner.">
+  <meta name="keywords" content="VGGSfM, Structure From Motion, 3D reconstruction">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visual Geometry Grounded Deep Structure From Motion</title>
+
+
+	<meta property="og:title" content="Visual Geometry Grounded Deep Structure From Motion." />
+	<meta property="og:description" content="We propose a new deep SfM pipeline, where each component is fully differentiable and thus can be trained in an end-to-end manner." />
+  <!-- Twitter automatically scrapes this. Go to https://cards-dev.twitter.com/validator?
+      if you update and want to force Twitter to re-scrape. -->
+  <meta property="twitter:card"          content="summary" />
+  <meta property="twitter:title"         content="Visual Geometry Grounded Deep Structure From Motion." />
+  <meta property="twitter:description"   content="We propose a new deep SfM pipeline, where each component is fully differentiable and thus can be trained in an end-to-end manner." />
+  <!-- <meta property="twitter:image"         content="https://3dmagicpony.github.io/resources/overview.jpg" /> -->
+
+  <!-- MathJax library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TSQGH8Q0WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TSQGH8Q0WV');
+  </script>
+  
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href=""> -->
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <!-- <script src="./static/js/index.js"></script> -->
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <!-- <div class="columns is-centered">
+        <video id="banner" autoplay muted loop playsinline height="100%">
+          <source src="resources/carousel.mp4"
+                  type="video/mp4">
+        </video>
+      </div> -->
+      <br>
+
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-3 publication-title" style="font-size: 2.2rem;">Visual Geometry Grounded Deep Structure From Motion</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://jytime.github.io/">Jianyuan Wang</a><sup>1, 2</sup>,
+            </span>
+            &nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://nikitakaraevv.github.io/">Nikita Karaev</a><sup>1, 2</sup>,
+            </span>
+            &nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://chrirupp.github.io/">Christian Rupprecht</a><sup>1</sup>,
+            </span>
+            &nbsp;&nbsp;&nbsp;
+            <span class="author-block">
+              <a href="https://d-novotny.github.io/">David Novotny</a><sup>2</sup>
+            </span>
+          </div>
+
+
+          <div class="is-size-5 publication-authors">
+            <!-- <span class="author-block"><sup>1</sup>Visual Geometry Group, University of Oxford,</span> -->
+            <span class="author-block" style="margin-right: 10px;"><sup>1</sup>Visual Geometry Group, University of Oxford,</span>
+            <span class="author-block"><sup>2</sup>Meta AI</span>
+          </div>
+
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block">ICCV 2023</span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/facebookresearch/PoseDiffusion"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span> -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Supp Material (soon)</span>
+                </a>
+              </span> -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                </a>
+              </span> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="resources/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <!-- <h2 class="subtitle"> -->
+      <h2 class="subtitle" style="text-align: center;">
+        Visualization of our reconstructions from multiple observation angles.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width has-text-centered">
+        <!-- <h2 class="title is-3">Camera Pose Estimation</h2> -->
+
+
+        <h2 class="title is-5">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Structure-from-motion (SfM) is a long-standing problem in the computer vision community, which aims to reconstruct the camera poses and 3D structure of a scene from a set of unconstrained 2D images. Classical frameworks solve this problem in an incremental manner by detecting and matching keypoints, registering images, triangulating 3D points, and conducting bundle adjustment. Recent research efforts have predominantly revolved around harnessing the power of deep learning techniques to enhance specific elements (e.g., keypoint matching), but are still based on the original, non-differentiable pipeline. Instead, we propose a new deep SfM pipeline, where each component is fully differentiable and thus can be trained in an end-to-end manner. To this end, we introduce new mechanisms and simplifications. First, we build on recent advances in deep 2D point tracking to extract reliable pixel-accurate tracks, which eliminates the need for chaining pairwise matches. Furthermore, we recover all cameras simultaneously based on the image and track features instead of gradually registering cameras. Finally, we optimise the cameras and triangulate 3D points via a differentiable bundle adjustment layer. We attain state-of-the-art performance on three popular datasets, CO3D, IMC Phototourism, and ETH3D.          </p>
+          </p>
+        </div>
+        <br>
+
+
+        <h2 class="title is-5">Framework</h2>
+        <div class="content has-text-justified">
+          <p>
+            Our method extracts 2D tracks from input images, reconstructs cameras using image and track features, initializes a point cloud based on these tracks and camera parameters, and applies a bundle adjustment layer for reconstruction refinement. The whole framework is fully differentiable.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+            <img id="teaser" src="resources/overview.png" alt="Teaser image" style="width: 100%;">
+        </div>
+        <br>
+
+
+        <h2 class="title is-5">In-the-wild Application</h2>
+        <div class="content has-text-justified">
+          <p>
+            Reconstruction of In-the-wild Photos with VGGSfM, displaying estimated point clouds (in blue) and cameras (orange).
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img id="qualimg" src="resources/Splash_land.png" alt="Inthewild" style="width: 100%;">
+        </div>       
+
+        
+
+        <h2 class="title is-5">Qualitative Visualization</h2>
+        <div class="content has-text-justified">
+          <p>
+            Camera and point-cloud reconstructions of VGGSfM on Co3D (left) and IMC Phototourism (right).
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img id="qualimg" src="resources/DenseRecons.png" alt="Reconstructions" style="width: 100%;">
+        </div>       
+
+        
+
+        <!-- <div class="content has-text-justified">
+          <p>
+            We also provide a video featuring the observation with a sweeping, fly-around viewpoint.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="qual-video" autoplay controls muted preload loop playsinline>
+            <source src="resources/qual_video.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <br> -->
+
+
+
+        <h2 class="title is-5">Tracking</h2>
+        <div class="content has-text-justified">
+          <p>
+            In each row, the left-most frame contains the query image with query points (crosses). The predicted track points (dots) are shown to the right. The top-right part also highlights our track-point confidence predictions, illustrated as ellipses with extent proportional to the predicted variance. 
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img id="uncertainty" src="resources/TrackVisual_v2.png" alt="Tracking" style="width: 100%;">
+        </div>        
+        <br>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@InProceedings{wang2023vggsfm,
+  author    = {Jianyuan Wang and Nikita Karaev and Christian Rupprecht and David Novotny},
+  title     = {Visual Geometry Grounded Deep Structure From Motion},
+  year      = {2023}
+}</code></pre>
+  </div>
+</section>
+
+<section class="section" id="Acknowledgements">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgements</h2>
+    <p>
+      We are deeply grateful for the insightful discussions and invaluable support provided by Vadim Tschernezki, Stanislaw Szymanowicz, Luke Melas-Kyriazi, Shangzhe Wu, Junyu Xie, Minghao Chen, Chuhan Zhang, Tengda Han, Chuanxia Zheng, Yash Bhalgat, Laurynas Karazija, Yuchao Dai, Yiran Zhong, Hongdong Li, Benjamin Graham, Junlin Han, Xingchen Liu, Ang Cao, Roman Shapovalov, João Henriques, Andrea Vedaldi, and Andrew Zisserman.
+    </p>
+    <p>
+      Jianyuan Wang is supported by Facebook Research. Christian Rupprecht is supported by ERC-CoG UNION 101001212 and VisualAI EP/T028572/1.    
+    </p>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This webpage template is adapted from <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
